@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.utils.html import mark_safe
 
-from courses.models import Course, Category
+from courses.models import Course, Category, Tag, Lesson
 
 from django import forms
 from ckeditor_uploader.widgets import CKEditorUploadingWidget
@@ -27,5 +27,13 @@ class MyCourseAdmin(admin.ModelAdmin):
             return mark_safe(f"<img src='/static/{course.image.name}' width='200' />")
 
 
+class MyLessonAdmin(admin.ModelAdmin):
+    list_display = ['subject', 'content', 'course', 'image']
+    search_fields = ['subject', 'course']
+    list_filter = ['subject', 'course']
+
+
 admin.site.register(Category)
 admin.site.register(Course, MyCourseAdmin)
+admin.site.register(Lesson, MyLessonAdmin)
+admin.site.register(Tag)
